@@ -55,6 +55,23 @@ const musicLibrary = [
     dontStay,
 ];
 
-const pageBody = document.getElementById(page-body);
+const pageBody = document.getElementById('page-body');
 
-function 
+function loadLibrary () {
+    pageBody.innerHTML = '';
+    for(let index = 0; index < musicLibrary.length; index++) {
+        pageBody.innerHTML += `
+        <div class="card d-flex flex-column align-items-center" style="width: 18rem; height: 30rem;">
+            <img src="images/covers/Slipknot_capa.jpg" class="card-img-top" alt="...">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Nome da musica</h5>
+                <p class="card-text">Nome do Álbum</p>
+                <p class="card-text">Nome do Artista</p>
+                <button class="btn btn-outline-info">Go somewhere</button>
+            </div>
+        </div>
+    `;
+        }
+}
+
+loadLibrary ()
