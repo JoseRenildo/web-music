@@ -57,11 +57,12 @@ const musicLibrary = [
 
 let songs = [...musicLibrary];
 
-let playlist = [cumOnFeelTheNoize, dustToDust, dontStay]
+let playlist = [xoteDosCabeludos, dustToDust, dontStay]
 
 const pageBody = document.getElementById('page-body');
 const searchTerm = document.getElementById('search-term');
 const searchBtn = document.getElementById('search-button');
+const playlistElement = document.getElementById('playlist');
 
 function loadLibrary () {
     pageBody.innerHTML = '';
@@ -78,6 +79,20 @@ function loadLibrary () {
         </div>
     `;
         }
+}
+
+function loadPlaylist () {
+    playlistElement.innerHTML = '';
+    for(let index = 0; index < playlist.length; index++) {
+        playlistElement.innerHTML += `<p ${playlist[index].id}
+        class="d-flex justify-content-between border-top border-bottom align-items-center">
+
+        ${playlist[index].songName} - ${playlist[index].artist}
+        <button class="btn btn-danger">
+            <i class="bi bi-trash3-fill"></i>
+        </button>
+    </p>`
+    }
 }
 
 function searchClick () {
@@ -99,3 +114,4 @@ searchBtn.addEventListener('click', searchClick)
 searchTerm.addEventListener('input', resetFilter)
 
 loadLibrary ()
+loadPlaylist ()
