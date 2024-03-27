@@ -74,7 +74,7 @@ function loadLibrary () {
                 <h5 class="card-title">${songs[index].songName}</h5>
                 <p class="card-text">${songs[index].album}</p>
                 <p class="card-text">${songs[index].artist}</p>
-                <button class="btn btn-outline-info"><i class="bi bi-plus-circle"></i></button>
+                <button class="btn btn-outline-info" onclick='addToPlaylist(${songs[index].id})'><i class="bi bi-plus-circle"></i></button>
             </div>
         </div>
     `;
@@ -84,11 +84,13 @@ function loadLibrary () {
 function loadPlaylist () {
     playlistElement.innerHTML = '';
     for(let index = 0; index < playlist.length; index++) {
-        playlistElement.innerHTML += `<p ${playlist[index].id}
+        playlistElement.innerHTML += `<p id=${playlist[index].id}
         class="d-flex justify-content-between border-top border-bottom align-items-center">
 
         ${playlist[index].songName} - ${playlist[index].artist}
-        <button class="btn btn-danger">
+        <button class="btn btn-danger" onclick="removeFromPlaylist(
+            ${playlist[index].id}
+        )">
             <i class="bi bi-trash3-fill"></i>
         </button>
     </p>`
@@ -109,6 +111,28 @@ function resetFilter () {
     songs = [...musicLibrary]
     loadLibrary ()
 }
+
+function removeFromPlaylist(songId) {
+    playlist = playlist.filter((song) => song.id !== songId)
+    document.getElementById(songId).remove()
+}
+
+function addToPlaylist(songId) {
+    if(playlist.filter(song => song.id === songId)) return;
+    const songToAdd = songs.find((x) => x.id === `${songId}`);
+    playlist.push(songToAdd)
+
+    playlistElement.innerHTML += `<p id=${songToAdd.id}
+        class="d-flex justify-content-between border-top border-bottom align-items-center">
+
+        ${songToAdd.songName} - ${songToAdd.artist}
+        <button class="btn btn-danger" onclick="removeFromPlaylist(
+            ${songToAdd.id}
+        )">
+            <i class="bi bi-trash3-fill"></i>
+        </button>
+    </p>`
+    }
 
 searchBtn.addEventListener('click', searchClick)
 searchTerm.addEventListener('input', resetFilter)
