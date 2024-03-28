@@ -57,7 +57,11 @@ const musicLibrary = [
 
 let songs = [...musicLibrary];
 
-let playlist = [xoteDosCabeludos, dustToDust, dontStay]
+let playlist = JSON.parse(localStorage.getItem('playlist')) ?? [
+    xoteDosCabeludos,
+    dustToDust,
+    dontStay,
+];
 
 const pageBody = document.getElementById('page-body');
 const searchTerm = document.getElementById('search-term');
@@ -74,7 +78,7 @@ function loadLibrary () {
                 <h5 class="card-title">${songs[index].songName}</h5>
                 <p class="card-text">${songs[index].album}</p>
                 <p class="card-text">${songs[index].artist}</p>
-                <button class="btn btn-outline-info" onclick='addToPlaylist(${songs[index].id})'><i class="bi bi-plus-circle"></i></button>
+                <button class="btn btn-outline-info" onclick="addToPlaylist(${songs[index].id})"><i class="bi bi-plus-circle"></i></button>
             </div>
         </div>
     `;
@@ -89,7 +93,7 @@ function loadPlaylist () {
 
         ${playlist[index].songName} - ${playlist[index].artist}
         <button class="btn btn-danger" onclick="removeFromPlaylist(
-            ${playlist[index].id}
+            '${playlist[index].id}'
         )">
             <i class="bi bi-trash3-fill"></i>
         </button>
@@ -115,11 +119,12 @@ function resetFilter () {
 function removeFromPlaylist(songId) {
     playlist = playlist.filter((song) => song.id !== songId)
     document.getElementById(songId).remove()
+    updateLocalStorage();
 }
 
 function addToPlaylist(songId) {
-    if(playlist.filter(song => song.id === songId)) return;
-    const songToAdd = songs.find((x) => x.id === `${songId}`);
+    if(playlist.find(song => song.id === songId)) return;
+    const songToAdd = songs.find((x) => x.id === songId);
     playlist.push(songToAdd)
 
     playlistElement.innerHTML += `<p id=${songToAdd.id}
@@ -127,12 +132,17 @@ function addToPlaylist(songId) {
 
         ${songToAdd.songName} - ${songToAdd.artist}
         <button class="btn btn-danger" onclick="removeFromPlaylist(
-            ${songToAdd.id}
+           '${songToAdd.id}'
         )">
             <i class="bi bi-trash3-fill"></i>
         </button>
     </p>`
+    updateLocalStorage();
     }
+
+function updateLocalStorage () {
+    localStorage.setItem('playlist', JSON.stringify(playlist));
+}
 
 searchBtn.addEventListener('click', searchClick)
 searchTerm.addEventListener('input', resetFilter)
