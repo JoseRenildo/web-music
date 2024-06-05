@@ -15,4 +15,4 @@ Veja agora: https://playlist-interativa.netlify.app/
 <li>JavaScript</li>
 </ul>
 
-<h4>Ferramenta de estudos fornecida pela Hashtag Treinamentos</h4>
+<h4>Ferramenta de estudos fornecida pela <i>Hashtag Treinamentos</i>.</h4>
