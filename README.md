@@ -14,3 +14,5 @@ Veja agora: https://playlist-interativa.netlify.app/
 <li>Bootstrap 5 (CSS)</li>
 <li>JavaScript</li>
 </ul>
+
+<h4>Ferramenta de estudos fornecida pela Hashtag Treinamentos</h4>
